@@ -13,14 +13,24 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 **/
-$version = "PR-005";
-error_reporting(0); // Turn off all error reporting
-$update_in_progress = "No";
 
-//grab site variables from here instead of connect file
-$stmt    = $pdo->prepare("SELECT * FROM settings");
-$stmt->execute();
-$settingsRow = $stmt->fetch(PDO::FETCH_ASSOC);
+// Version Number -- Do Not Change
+$version = "PR-006";
+
+
+// Disable Error Reporting
+error_reporting(0);
+
+
+// Oudated Variables/Constants?
+$update_in_progress = "No";
+define("isDonator", false);
+
+// Get Global Functions
+require_once("functions.php");
+
+// Get Site Config
+$settingsRow = dbquery('SELECT * FROM settings')[0];
 
 //Define variables
 $settings_background_db = $settingsRow['background_color'];
@@ -77,11 +87,6 @@ if (isset($settingsRow['subdivision_module'])) {
 
 //End Module Checks
 
-if ($settings_donator === "Yes") {
-  define("isDonator", true);
-} else {
-  define("isDonator", false);
-}
 
 if ($settings_site_name_db === "CHANGE IN SETTINGS" || $settings_site_name_db === "CHANGE ME IN SETTINGS") {
   define("setupComplete", false);
@@ -134,12 +139,11 @@ $time = date('h:i:s A', time());
 //________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 //YOU ARE NOT ALLOWED TO REMOVE THIS. REMOVING THIS, REMOVING BACKLINKS, WILL RESULT IN A DMCA TAKEDOWN AS IT IS A BREACH OF OUR LICENSE (AGPL v3)
-$ftter = '<br /><small><strong><a href="https://discord.gg/NeRrWZC">Powered by Hydrid</a></strong></small><br />
+$ftter = '<br /><small><strong><a href="https://discord.gg/NeRrWZC" target="_BLANK">Powered by Hydrid</a></strong></small><br />
 <small>Version: '.$version;
 
-//version check
-$url_vc = "https://pastebin.com/raw/d63r81DF";
-$data_vc = file_get_contents($url_vc);
+// Version Check/Control
+$data_vc = file_get_contents("https://pastebin.com/raw/d63r81DF");
 
 if ($data_vc > $version) {
   define('isOutdated', true);

@@ -220,6 +220,7 @@ include('includes/header.php')
    </div>
 
    <!-- javascript -->
+   <?php include('includes/js.php'); ?>
    <script>
    $(document).ready(function () {
      $("#dismiss").delay(3000).fadeOut("slow");

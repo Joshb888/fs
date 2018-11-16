@@ -193,5 +193,6 @@ include('includes/header.php')
             </form>
          </div>
       </div>
+      <?php include('includes/js.php'); ?>
    </body>
 </html>

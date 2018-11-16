@@ -39,5 +39,6 @@ include('includes/header.php')
             <?php echo $ftter; ?>
          </div>
       </div>
+      <?php include('includes/js.php'); ?>
    </body>
 </html>

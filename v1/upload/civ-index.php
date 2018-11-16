@@ -258,5 +258,6 @@ if (isset($_GET['character']) && strip_tags($_GET['character']) === 'created') {
             <?php echo $ftter; ?>
          </div>
       </div>
+      <?php include('includes/js.php'); ?>
    </body>
 </html>

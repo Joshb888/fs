@@ -208,6 +208,7 @@ include('includes/header.php')
    <!-- // -->
    <!-- end modals -->
    <!-- js -->
+   <?php include('includes/js.php'); ?>
    <script src="assets/js/pages/fire.js"></script>
    <!-- end js -->
 </body>

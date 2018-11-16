@@ -308,5 +308,6 @@ include('includes/header.php')
       </div>
       <!-- end modal -->
    </div>
+   <?php include('includes/js.php'); ?>
 </body>
 </html>

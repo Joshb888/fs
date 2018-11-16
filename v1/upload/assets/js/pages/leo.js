@@ -150,38 +150,48 @@ function showWpn(str) {
  getPriorityStatus();
 
 function getTime(){
-    $.ajax({
-        url: "functions/leo/api.php?a=dynamicTime",
-        success:
-        function(result){
-            $('#getTime').text(result); //insert text of test.php into your div
-            setTimeout(function(){
-                sendRequest(); //this will send request again and again;
-            }, 1000);
-        }
-    });
+  (function worker() {
+  $.ajax({
+    url: 'functions/leo/api.php?a=dynamicTime',
+    success: function(data) {
+      $('#getTime').html(data);
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      setTimeout(worker, 1000);
+    }
+  });
+})();
 }
 
-function getBolos() {
-  $(document).ready(function() {
-   $.ajaxSetup({
-    cache: false
-   });
-   setInterval(function() {
-    $('#getBolos').load('functions/leo/api.php?a=getBolos');
-   }, 3000);
+function getBolos(){
+  (function worker() {
+  $.ajax({
+    url: 'functions/leo/api.php?a=getBolos',
+    success: function(data) {
+      $('#getBolos').html(data);
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      setTimeout(worker, 1000);
+    }
   });
+})();
 }
 
-function get911calls() {
-  $(document).ready(function() {
-   $.ajaxSetup({
-    cache: false
-   });
-   setInterval(function() {
-    $('#get911calls').load('functions/leo/api.php?a=get911calls');
-   }, 3000);
+function get911calls(){
+  (function worker() {
+  $.ajax({
+    url: 'functions/leo/api.php?a=get911calls',
+    success: function(data) {
+      $('#get911calls').html(data);
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      setTimeout(worker, 1000);
+    }
   });
+})();
 }
 
 function updateNotepad(str) {
@@ -205,39 +215,49 @@ function updateNotepad(str) {
  }
 }
 
-function getActiveUnits() {
-   $.ajaxSetup({
-    cache: false
-   });
-   setInterval(function() {
-    $('#getActiveUnits').load('functions/leo/api.php?a=getActiveUnits');
-   }, 3000);
+function getActiveUnits(){
+  (function worker() {
+  $.ajax({
+    url: 'functions/leo/api.php?a=getActiveUnits',
+    success: function(data) {
+      $('#getActiveUnits').html(data);
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      setTimeout(worker, 1000);
+    }
+  });
+})();
 }
 
 function getStatus(){
-    $.ajax({
-        url: "functions/leo/api.php?a=getStatus",
-        success:
-        function(result){
-            $('#checkStatus').text(result); //insert text of test.php into your div
-            setTimeout(function(){
-                sendRequest(); //this will send request again and again;
-            }, 1000);
-        }
-    });
+  (function worker() {
+  $.ajax({
+    url: 'functions/leo/api.php?a=getStatus',
+    success: function(data) {
+      $('#checkStatus').html(data);
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      setTimeout(worker, 1000);
+    }
+  });
+})();
 }
 
 function getAOP(){
-    $.ajax({
-        url: "functions/leo/api.php?a=getAOP",
-        success:
-        function(result){
-            $('#checkAOP').text(result); //insert text of test.php into your div
-            setTimeout(function(){
-                sendRequest(); //this will send request again and again;
-            }, 1000);
-        }
-    });
+  (function worker() {
+  $.ajax({
+    url: 'functions/leo/api.php?a=getAOP',
+    success: function(data) {
+      $('#checkAOP').html(data);
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      setTimeout(worker, 1000);
+    }
+  });
+})();
 }
 
 function setStatus(unit) {
@@ -301,11 +321,17 @@ function aopSet(str) {
  }
 }
 
-function getPendingIds() {
-  $(document).ready(function() {
-  $.ajaxSetup({ cache: false });
-  setInterval(function() {
-  $('#getPendingIds').load('functions/leo/api.php?a=getPendingIds');
-  }, 1000);
+function getPendingIds(){
+  (function worker() {
+  $.ajax({
+    url: 'functions/leo/api.php?a=getPendingIds',
+    success: function(data) {
+      $('#getPendingIds').html(data);
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      setTimeout(worker, 1000);
+    }
   });
+})();
 }

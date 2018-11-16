@@ -287,7 +287,8 @@ include('includes/header.php')
    <!-- // -->
    <!-- end modals -->
    <!-- js -->
-   <script src="../main-core/assets/js/pages/fire.js"></script>
+   <?php include('includes/js.php'); ?>
+   <script src="assets/js/pages/fire.js"></script>
    <!-- end js -->
 </body>
 </html>

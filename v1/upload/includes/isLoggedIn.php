@@ -23,111 +23,101 @@ $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
 //Define variables
 $user_username = $userRow['username'];
-$user_email  = $userRow['email'];
-$user_usergroup      = $userRow['usergroup'];
-$user_departments  = $userRow['departments'];
-$user_ip         = $userRow['join_ip'];
-$user_joindate   = $userRow['join_date'];
+$user_email = $userRow['email'];
+$user_usergroup = $userRow['usergroup'];
+$user_departments = $userRow['departments'];
+$user_ip = $userRow['join_ip'];
+$user_joindate = $userRow['join_date'];
 
 //Module Defines
 if (discordModule_isInstalled) {
   $user_discord   = $userRow['discord'];
 }
 
-//Get usergroup permissions
-if ($user_usergroup === "Banned") {
-  define("banned", true);
-  define("panel_access", false);
-  define("staff_approveUsers", false);
-  define("staff_access", false);
-  define("staff_viewUsers", false);
-  define("staff_editUsers", false);
-  define("staff_siteSettings", false);
-}
-if ($user_usergroup === "Unverified") {
-  define("banned", false);
-  define("panel_access", false);
-  define("staff_approveUsers", false);
-  define("staff_access", false);
-  define("staff_viewUsers", false);
-  define("staff_editUsers", false);
-  define("staff_siteSettings", false);
-}
-  elseif ($user_usergroup === "User") {
-    define("banned", false);
-  define("panel_access", true);
-  define("staff_approveUsers", false);
-  define("staff_access", false);
-  define("staff_viewUsers", false);
-  define("staff_editUsers", false);
-  define("staff_siteSettings", false);
-} elseif ($user_usergroup === "Moderator") {
-  define("banned", false);
-  define("panel_access", true);
-  define("staff_approveUsers", true);
-  define("staff_access", true);
-  define("staff_viewUsers", true);
-  define("staff_editUsers", false);
-  define("staff_siteSettings", false);
-} elseif ($user_usergroup === "Admin") {
-  define("banned", false);
-  define("panel_access", true);
-  define("staff_approveUsers", true);
-  define("staff_access", true);
-  define("staff_viewUsers", true);
-  define("staff_editUsers", true);
-  define("staff_siteSettings", false);
-} elseif ($user_usergroup === "Management") {
-  define("banned", false);
-  define("panel_access", true);
-  define("staff_approveUsers", true);
-  define("staff_access", true);
-  define("staff_viewUsers", true);
-  define("staff_editUsers", true);
-  define("staff_siteSettings", true);
-} elseif ($user_usergroup === "Developer") {
-  define("banned", false);
-  define("panel_access", true);
-  define("staff_approveUsers", true);
-  define("staff_access", true);
-  define("staff_viewUsers", true);
-  define("staff_editUsers", true);
-  define("staff_siteSettings", true);
+// Default Values
+$perms['banned'] = false;
+$perms['panel_access'] = false;
+$perms['staff_approveUsers'] = false;
+$perms['staff_access'] = false;
+$perms['staff_viewUsers'] = false;
+$perms['staff_editUsers'] = false;
+$perms['staff_siteSettings'] = false;
+
+// Define User Permissions
+switch($user_usergroup) {
+  case "Banned":
+    $perms['banned'] = true;
+    break;
+  case "User":
+    $perms['panel_access'] = true;
+    break;
+  case "Moderator":
+    $perms['panel_access'] = true;
+    $perms['staff_approveUsers'] = true;
+    $perms['staff_access'] = true;
+    $perms['staff_viewUsers'] = true;
+    break;
+  case "Admin":
+    $perms['panel_access'] = true;
+    $perms['staff_approveUsers'] = true;
+    $perms['staff_access'] = true;
+    $perms['staff_viewUsers'] = true;
+    $perms['staff_editUsers'] = true;
+    break;
+  case "Management":
+    $perms['panel_access'] = true;
+    $perms['staff_approveUsers'] = true;
+    $perms['staff_access'] = true;
+    $perms['staff_viewUsers'] = true;
+    $perms['staff_editUsers'] = true;
+    $perms['staff_siteSettings'] = true;
+    break;
+  case "Developer":
+    $perms['panel_access'] = true;
+    $perms['staff_approveUsers'] = true;
+    $perms['staff_access'] = true;
+    $perms['staff_viewUsers'] = true;
+    $perms['staff_editUsers'] = true;
+    $perms['staff_siteSettings'] = true;
+    break;
 }
 
+// Define Values
+define("banned", $perms['banned']);
+define("panel_access", $perms['panel_access']);
+define("staff_approveUsers", $perms['staff_approveUsers']);
+define("staff_access", $perms['staff_access']);
+define("staff_viewUsers", $perms['staff_viewUsers']);
+define("staff_editUsers", $perms['staff_editUsers']);
+define("staff_siteSettings", $perms['staff_siteSettings']);
 
-//ban check
+// Check If Banned
 if (banned) {
   session_destroy();
   header('Location: ' . $url_login . '?account=banned');
   exit();
 }
-if ($settings_panel_suspended != "No") {
-  session_destroy();
-  header('Location: ' . $url_login . '?panel=banned');
-  exit();
-}
 
+// Check Update Status
 if ($update_in_progress === "Yes") {
-  if ($user_usergroup === "Developer") {
-    //do nothing
-  } else {
+  if ($user_usergroup !== "Developer") {
     session_destroy();
     header('Location: ' . $url_login . '?update=ip');
     exit();
   }
 }
 
-function logme ($action, $username) {
-  $username_c        = strip_tags($username);
-  $action_c        = strip_tags($action);
+// Log Function
+function logme($action, $username) {
+  $username_c = strip_tags($username);
+  $action_c = strip_tags($action);
 
   global $pdo;
   global $time;
   global $us_date;
 
-  $log_sql          = "INSERT INTO logs (action, username, timestamp) VALUES (:action, :username, :timedate)";
-  $log_stmt         = $pdo->prepare($log_sql);
+  $log_sql = "INSERT INTO logs (action, username, timestamp) VALUES (:action, :username, :timedate)";
+  $log_stmt = $pdo->prepare($log_sql);
   $log_stmt->bindValue(':action', $action_c);
   $log_stmt->bindValue(':username', $username_c);
   $log_stmt->bindValue(':timedate', $time . ' ' . $us_date);

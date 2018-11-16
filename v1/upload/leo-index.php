@@ -286,11 +286,13 @@ include('includes/header.php')
                  $getBolos = "SELECT * FROM custom10codes";
              	 	$result = $pdo->prepare($getBolos);
              		$result->execute();
-             		while ($row = $result->fetch(PDO::FETCH_ASSOC))
-             			{
-                    echo '<a id="'. $row['btn_value'] .'" class="btn btn-info btn-md" style="width:140px; margin-bottom: 4px;" onclick="setStatus(this)">'. $row['btn_value'] .'</a>';
-                  }
+             		while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+						echo '<a id="'. $row['btn_value'] .'" class="btn btn-info btn-md ';
+						if ($_SESSION['on_duty'] === "No") {echo 'disabled';}
+						echo '" style="width:140px; margin-bottom: 4px;" onclick="setStatus(this)">'. $row['btn_value'] .'</a> ';
+					}
                  ?>
+				 <br>
                <?php endif; ?><br>
                  <form method="post" action="leo-index.php">
                <button class="btn btn-info btn-md" name="1041btn" style="width:140px; margin-bottom: 4px;" type="submit" type="button" <?php if ($_SESSION['on_duty'] === "Yes") {echo 'disabled';} ?>>10-41</button>
@@ -601,6 +603,7 @@ include('includes/header.php')
    <!-- <audio id="panicButton" src="assets/sounds/panic-button.mp3" preload="auto"></audio> -->
    <!-- end sounds -->
    <!-- js -->
+   <?php include('includes/js.php'); ?>
    <script src="assets/js/pages/leo.js"></script>
    <!-- end js -->
 </body>

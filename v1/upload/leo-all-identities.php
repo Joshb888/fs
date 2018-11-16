@@ -233,8 +233,8 @@ include('includes/header.php')
    <!-- sounds -->
    <!-- <audio id="panicButton" src="assets/sounds/panic-button.mp3" preload="auto"></audio> -->
    <!-- end sounds -->
-
    <!-- js -->
+   <?php include('includes/js.php'); ?>
    <script type="text/javascript">
     $(document).ready(function() {
       $('.js-example-basic-single').select2({

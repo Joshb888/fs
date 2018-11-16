@@ -108,6 +108,7 @@ include('includes/header.php')
    <!-- end sounds -->
 
    <!-- js -->
+   <?php include('includes/js.php'); ?>
    <script src="assets/js/pages/leo.js"></script>
    <!-- end js -->
 </body>

@@ -482,6 +482,7 @@ include('includes/header.php')
   </div>
    <!-- end modals -->
    <!-- js -->
+   <?php include('includes/js.php'); ?>
    <script src="assets/js/pages/dispatch.js"></script>
    <!-- end js -->
 </body>

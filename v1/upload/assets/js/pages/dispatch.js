@@ -28,26 +28,28 @@ $(document).ready(function() {
  getAOP();
 });
 
-var isFocused = false;
-
-function getActiveUnitsDispatch() {
- $.ajaxSetup({
-  cache: true
- });
- setInterval(function() {
-  $( document ).ajaxComplete(function() {
-    $('.select-units').focus(function() {
-        isFocused = true;
-    });
-    $('.select-units').blur(function() {
-        isFocused = false;
-    });
+function getActiveUnitsDispatch(){
+  (function worker() {
+  $.ajax({
+    url: 'functions/leo/api.php?a=getActiveUnitsDispatch',
+    success: function(data) {
+      $('#dispUnitsTable').html(data);
+    },
+    complete: function() {
+      $( document ).ajaxComplete(function() {
+        $('.select-units').focus(function() {
+            isFocused = true;
+        });
+        $('.select-units').blur(function() {
+            isFocused = false;
+        });
+      });
+      if (!isFocused) {
+      setTimeout(worker, 1000);
+    }
+    }
   });
-  if (!isFocused) {
-  $('#dispUnitsTable').load('functions/leo/api.php?a=getActiveUnitsDispatch');
-  }
-
- }, 3000);
+})();
 }
 
 function showVeh(str) {
@@ -138,15 +140,19 @@ function updateUnitStatus(selectObject) {
  isFocused = false;
 }
 
-function getAOP() {
-  $(document).ready(function() {
-   $.ajaxSetup({
-    cache: false
-   });
-   setInterval(function() {
-    $('#checkAOP').load('functions/leo/api.php?a=getAOP');
-   }, 3000);
+function getAOP(){
+  (function worker() {
+  $.ajax({
+    url: 'functions/leo/api.php?a=getAOP',
+    success: function(data) {
+      $('#checkAOP').html(data);
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      setTimeout(worker, 1000);
+    }
   });
+})();
 }
 
 function setAOP(aop) {
@@ -165,7 +171,7 @@ function setAOP(aop) {
     xmlhttp.open("GET", "functions/leo/api.php?a=setAOP&q=" + aop, true);
     xmlhttp.send();
     $('#aop').modal('hide');
-    
+
     // alert(str + " " + uid);
 }
 
@@ -189,40 +195,64 @@ function assignCall(selectObject) {
  // alert(str + " " + uid);
 }
 
-function dynamicTime() {
- $.ajaxSetup({
-  cache: false
- });
- setInterval(function() {
-  $('#getTime').load('functions/leo/api.php?a=dynamicTime');
- }, 1000);
+function dynamicTime(){
+  (function worker() {
+  $.ajax({
+    url: 'functions/leo/api.php?a=dynamicTime',
+    success: function(data) {
+      $('#getTime').html(data);
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      setTimeout(worker, 1000);
+    }
+  });
+})();
 }
 
-function getBolosDispatch() {
- $.ajaxSetup({
-  cache: false
- });
- setInterval(function() {
-  $('#getBolos').load('functions/leo/api.php?a=getBolosDispatch');
- }, 3000);
+function getBolosDispatch(){
+  (function worker() {
+  $.ajax({
+    url: 'functions/leo/api.php?a=getBolosDispatch',
+    success: function(data) {
+      $('#getBolos').html(data);
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      setTimeout(worker, 1000);
+    }
+  });
+})();
 }
 
-function get911callsDispatch() {
- $.ajaxSetup({
-  cache: false
- });
- setInterval(function() {
-  $('#get911calls').load('functions/leo/api.php?a=get911callsDispatch');
- }, 3000);
+function get911callsDispatch(){
+  (function worker() {
+  $.ajax({
+    url: 'functions/leo/api.php?a=get911callsDispatch',
+    success: function(data) {
+      $('#get911calls').html(data);
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      setTimeout(worker, 1000);
+    }
+  });
+})();
 }
 
-function getStatus() {
- $.ajaxSetup({
-  cache: false
- });
- setInterval(function() {
-  $('#checkStatus').load('functions/leo/api.php?a=getStatus');
- }, 3000);
+function getStatus(){
+  (function worker() {
+  $.ajax({
+    url: 'functions/leo/api.php?a=getStatus',
+    success: function(data) {
+      $('#checkStatus').html(data);
+    },
+    complete: function() {
+      // Schedule the next request when the current one's complete
+      setTimeout(worker, 1000);
+    }
+  });
+})();
 }
 
 $(document).ready(function() {

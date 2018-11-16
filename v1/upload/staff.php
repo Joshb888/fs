@@ -1013,6 +1013,7 @@ include('includes/header.php')
 </div>
 <?php endif; ?>
    <!-- javascript -->
+   <?php include('includes/js.php'); ?>
    <script src="assets/js/pages/staff.js"></script>
    <!-- end javascript -->
 </body>

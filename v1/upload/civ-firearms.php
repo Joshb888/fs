@@ -285,5 +285,6 @@ if (isset($_GET['firearm']) && strip_tags($_GET['firearm']) === 'registered') {
             <?php echo $ftter; ?>
          </div>
       </div>
+      <?php include('includes/js.php'); ?>
    </body>
 </html>
