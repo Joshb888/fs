@@ -14,7 +14,7 @@
     GNU General Public License for more details.
 **/
 require 'includes/connect.php';
-include 'includesincludes/config.php';
+include 'includes/config.php';
 session_start();
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])) {
     header('Location: ' . $url_login . '');

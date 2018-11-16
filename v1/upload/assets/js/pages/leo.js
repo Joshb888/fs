@@ -139,7 +139,7 @@ function showWpn(str) {
  }
 }
 
-$(document).ready(function() {
+
  getTime();
  getBolos();
  get911calls();
@@ -148,17 +148,18 @@ $(document).ready(function() {
  getAOP();
  getPendingIds();
  getPriorityStatus();
-});
 
-function getTime() {
-  $(document).ready(function() {
-   $.ajaxSetup({
-    cache: false
-   });
-   setInterval(function() {
-    $('#getTime').load('functions/leo/api.php?a=dynamicTime');
-  }, 1000);
-  });
+function getTime(){
+    $.ajax({
+        url: "functions/leo/api.php?a=dynamicTime",
+        success:
+        function(result){
+            $('#getTime').text(result); //insert text of test.php into your div
+            setTimeout(function(){
+                sendRequest(); //this will send request again and again;
+            }, 1000);
+        }
+    });
 }
 
 function getBolos() {
@@ -205,36 +206,38 @@ function updateNotepad(str) {
 }
 
 function getActiveUnits() {
-  $(document).ready(function() {
    $.ajaxSetup({
     cache: false
    });
    setInterval(function() {
     $('#getActiveUnits').load('functions/leo/api.php?a=getActiveUnits');
    }, 3000);
-  });
 }
 
-function getStatus() {
-  $(document).ready(function() {
-   $.ajaxSetup({
-    cache: false
-   });
-   setInterval(function() {
-    $('#checkStatus').load('functions/leo/api.php?a=getStatus');
-   }, 1000);
-  });
+function getStatus(){
+    $.ajax({
+        url: "functions/leo/api.php?a=getStatus",
+        success:
+        function(result){
+            $('#checkStatus').text(result); //insert text of test.php into your div
+            setTimeout(function(){
+                sendRequest(); //this will send request again and again;
+            }, 1000);
+        }
+    });
 }
 
-function getAOP() {
-  $(document).ready(function() {
-   $.ajaxSetup({
-    cache: false
-   });
-   setInterval(function() {
-    $('#checkAOP').load('functions/leo/api.php?a=getAOP');
-   }, 1000);
-  });
+function getAOP(){
+    $.ajax({
+        url: "functions/leo/api.php?a=getAOP",
+        success:
+        function(result){
+            $('#checkAOP').text(result); //insert text of test.php into your div
+            setTimeout(function(){
+                sendRequest(); //this will send request again and again;
+            }, 1000);
+        }
+    });
 }
 
 function setStatus(unit) {
